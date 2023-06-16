@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         val dateFormat = SimpleDateFormat("d MMM yyyy")
         val date = dateFormat.format(Date())
         binding.mainContent.tvDate.text = date
+        isLocationPermissionGranted()
     }
 
     private fun isLocationPermissionGranted(): Boolean {
