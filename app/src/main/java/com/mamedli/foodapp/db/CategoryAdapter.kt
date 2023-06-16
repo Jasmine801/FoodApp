@@ -1,5 +1,6 @@
 package com.mamedli.foodapp.db
 
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,14 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mamedli.foodapp.R
 import com.mamedli.foodapp.databinding.CategoryItemBinding
 import com.mamedli.foodapp.entities.CategoryItem
+import com.squareup.picasso.Picasso
 
 
-class CategoryAdapter(private val categoryList: Array<CategoryItem>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+class CategoryAdapter(private val categoryList: MutableList<CategoryItem>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val binding = CategoryItemBinding.bind(view)
+
         fun setData(categoryItem: CategoryItem?) = with(binding){
             tvCtegoryName.text = categoryItem?.name
-            imFood.setImageDrawable()
+            Picasso.get().load(categoryItem?.imageUrl).into(imFood)
         }
 
     }
