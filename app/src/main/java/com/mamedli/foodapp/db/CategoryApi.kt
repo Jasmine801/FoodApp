@@ -7,8 +7,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface CategoryApi {
-    @GET("categories")
-    fun getCategories() : Call<MutableList<CategoryItem>>
+    @GET("сategories")
+    fun getCategories() : Call<CategoryItem>
 
     //suspend fun getCategoryById(@Path("id") id : Int)
 }

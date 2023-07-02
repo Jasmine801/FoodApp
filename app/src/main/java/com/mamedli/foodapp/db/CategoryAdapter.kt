@@ -8,16 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mamedli.foodapp.R
 import com.mamedli.foodapp.databinding.CategoryItemBinding
 import com.mamedli.foodapp.entities.CategoryItem
+import com.mamedli.foodapp.entities.CategoryList
 import com.squareup.picasso.Picasso
 
 
-class CategoryAdapter(private val categoryList: MutableList<CategoryItem>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private var categoryList: CategoryList) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val binding = CategoryItemBinding.bind(view)
 
-        fun setData(categoryItem: CategoryItem?) = with(binding){
-            tvCtegoryName.text = categoryItem?.name
-            Picasso.get().load(categoryItem?.imageUrl).into(imFood)
+        fun setData(categoryItem: CategoryList) = with(binding){
+            tvCtegoryName.text = categoryItem.name
+            if(!categoryItem.imageUrl.isNullOrEmpty()){
+                Picasso.get().load(categoryItem.imageUrl).into(imFood)
+            }
+            /*else {
+                Picasso.get().load(categoryItem.imageUrl).into(imFood)
+            }*/
         }
 
     }
@@ -29,10 +35,15 @@ class CategoryAdapter(private val categoryList: MutableList<CategoryItem>) : Rec
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(categoryList[position])
+        val category = categoryList
+        holder.setData(category)
     }
 
-    override fun getItemCount(): Int {
-        return categoryList.size
+    override fun getItemCount() =  1
+
+
+     fun setData(categoryList: CategoryList){
+        this.categoryList = categoryList
+        notifyDataSetChanged()
     }
 }
