@@ -16,14 +16,11 @@ class CategoryAdapter(private var categoryList: CategoryList) : RecyclerView.Ada
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val binding = CategoryItemBinding.bind(view)
 
-        fun setData(categoryItem: CategoryList) = with(binding){
-            tvCtegoryName.text = categoryItem.name
-            if(!categoryItem.imageUrl.isNullOrEmpty()){
+        fun setData(categoryItem: CategoryItem) = with(binding){
+            if(!categoryItem.imageUrl.isNullOrEmpty() && !categoryItem.name.isNullOrEmpty()){
+                tvCtegoryName.text = categoryItem.name
                 Picasso.get().load(categoryItem.imageUrl).into(imFood)
             }
-            /*else {
-                Picasso.get().load(categoryItem.imageUrl).into(imFood)
-            }*/
         }
 
     }
@@ -35,11 +32,11 @@ class CategoryAdapter(private var categoryList: CategoryList) : RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val category = categoryList
+        val category = categoryList.categories[position]
         holder.setData(category)
     }
 
-    override fun getItemCount() =  1
+    override fun getItemCount() = categoryList?.categories?.size ?: 0
 
 
      fun setData(categoryList: CategoryList){

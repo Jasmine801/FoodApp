@@ -16,6 +16,7 @@ import com.mamedli.foodapp.db.CategoryAdapter
 import com.mamedli.foodapp.db.CategoryApi
 import com.mamedli.foodapp.db.RetrofitInstance
 import com.mamedli.foodapp.entities.CategoryItem
+import com.mamedli.foodapp.entities.CategoryList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,8 +52,8 @@ class MainFragment : Fragment() {
         binding.rcView.layoutManager = LinearLayoutManager(requireContext())
         binding.rcView.setHasFixedSize(true)
 
-        val category = CategoryItem(0, "", "")
-        adapter = CategoryAdapter(category)
+        val category = emptyList<CategoryItem>()
+        adapter = CategoryAdapter(CategoryList(emptyList()))
         binding.rcView.adapter = adapter
 
         val retrofit = Retrofit.Builder()
@@ -62,13 +63,13 @@ class MainFragment : Fragment() {
 
         val categoryService = retrofit.create(CategoryApi::class.java)
 
-        categoryService.getCategories().enqueue(object : Callback<CategoryItem>
+        categoryService.getCategories().enqueue(object : Callback<CategoryList>
         {
-            override fun onFailure(call: Call<CategoryItem>, t: Throwable) {
+            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
                 Log.e("TAG", "Error fetching data", t)
             }
 
-            override fun onResponse(call: Call<CategoryItem>, response: Response<CategoryItem>) {
+            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
                 val categoryList = response.body()
                 Log.d("TAG", "Data received: $categoryList")
                 if(categoryList != null) {
